@@ -15,7 +15,7 @@ pipeline {
             stage ('Downloading the Dependencies') {
               steps{
                 //sh "npm install"
-                sh "npm installation"
+                sh "echo npm installation"
                 }
             }
 
