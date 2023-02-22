@@ -39,13 +39,9 @@ pipeline {
 
             stage ('Lint Checks'){
               steps {
-                     //script{
-                       // sample.info("Welcome","stockexchange.com
-                        //")
-                     //}
-                     script{
-                    lintCheck()
-                     }
+                  script{
+                      lintCheck()
+                  }
                     //sh "echo installing jslint"
                     //sh "npm i jslint"
                     //sh "node_modules/jslint/bin/jslint.js server.js"
