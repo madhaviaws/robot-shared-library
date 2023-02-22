@@ -13,13 +13,12 @@
 // }
 
 def lintCheck() {
-  sh ''' 
-    //     # We want Devs to handle the lint checks failure 
-      //   # npm i jslint 
-        // # node_modules/jslint/bin/jslint.js  server.js || true 
-         echo Starting lint checks
+    sh ''' 
+         echo Starting lint checks ${COMPONENT}
+      //   mvn checkstyle:check || true                        # lint checks
          echo Lint Checks Completed for ${COMPONENT}
-    ''' 
+       
+       ''' 
 }
 
 def call() {
@@ -38,16 +37,21 @@ pipeline {
             }
 
             stage ('Lint Checks'){
-              steps {
-                  script{
-                      lintCheck()
-                  }
+                steps {
+                     //script{
+                       // sample.info("Welcome","stockexchange.com
+                       // ")
+                     //}
+                     script{
+                        lintCheck()
+                     }
                     //sh "echo installing jslint"
                     //sh "npm i jslint"
                     //sh "node_modules/jslint/bin/jslint.js server.js"
                    // sh "echo lint checks has completed"
                     
-                }      
+                } 
+
             }
             stage('Sonar Check') {
               steps {
