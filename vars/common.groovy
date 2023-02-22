@@ -1,46 +1,46 @@
-def lintCheck() {
-  stage('Lint Checks') {
+// def lintCheck() {
+//   stage('Lint Checks') {
 
-    if (env.APPTYPE == 'nodejs') {
-      sh ''' 
-            # npm install 
-            # We want Devs to handle the lint checks failure 
-            # npm i jslint 
-            # node_modules/jslint/bin/jslint.js  server.js || true 
-            echo Starting lint checks
-            echo Lint Checks Completed for ${COMPONENT}
+//     if (env.APPTYPE == 'nodejs') {
+//       sh ''' 
+//             # npm install 
+//             # We want Devs to handle the lint checks failure 
+//             # npm i jslint 
+//             # node_modules/jslint/bin/jslint.js  server.js || true 
+//             echo Starting lint checks
+//             echo Lint Checks Completed for ${COMPONENT}
       
-        ''' 
-        } else if (env.APPTYPE == 'python'){
-        sh ''' 
-            echo Starting lint checks ${COMPONENT}
-            # pylint *.py           # lint checks
-            echo Lint Checks Completed for ${COMPONENT}
-         ''' 
-      } else if (env.APPTYPE == 'maven'){
-        sh ''' 
-            # mvn clean compile 
-            echo Starting lint checks ${COMPONENT}
-            # mvn checkstyle:check || true                        # lint checks
-            echo Lint Checks Completed for ${COMPONENT}
-         ''' 
-      }
-      else if (env.APPTYPE == 'go'){
-        sh ''' 
+//         ''' 
+//         } else if (env.APPTYPE == 'python'){
+//         sh ''' 
+//             echo Starting lint checks ${COMPONENT}
+//             # pylint *.py           # lint checks
+//             echo Lint Checks Completed for ${COMPONENT}
+//          ''' 
+//       } else if (env.APPTYPE == 'maven'){
+//         sh ''' 
+//             # mvn clean compile 
+//             echo Starting lint checks ${COMPONENT}
+//             # mvn checkstyle:check || true                        # lint checks
+//             echo Lint Checks Completed for ${COMPONENT}
+//          ''' 
+//       }
+//       else if (env.APPTYPE == 'go'){
+//         sh ''' 
             
-            echo Starting lint checks ${COMPONENT}
-            # golint main.go                        # lint checks
-            echo Lint Checks Completed for ${COMPONENT}
-         ''' 
-      }
-       else {
-        sh ''' 
-            echo Starting lint checks ${COMPONENT}
-            echo Lint Checks Completed for ${COMPONENT}
-         ''' 
-      }
-    }
-}
+//             echo Starting lint checks ${COMPONENT}
+//             # golint main.go                        # lint checks
+//             echo Lint Checks Completed for ${COMPONENT}
+//          ''' 
+//       }
+//        else {
+//         sh ''' 
+//             echo Starting lint checks ${COMPONENT}
+//             echo Lint Checks Completed for ${COMPONENT}
+//          ''' 
+//       }
+//     }
+// }
 
 def sonarCheck() {
     stage('Sonar Checks') {
