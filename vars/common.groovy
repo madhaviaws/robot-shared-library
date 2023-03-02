@@ -1,46 +1,46 @@
-// def lintCheck() {
-//   stage('Lint Checks') {
+def lintCheck() {
+  stage('Lint Checks') {
 
-//     if (env.APPTYPE == 'nodejs') {
-//       sh ''' 
-//             # npm install 
-//             # We want Devs to handle the lint checks failure 
-//             # npm i jslint 
-//             # node_modules/jslint/bin/jslint.js  server.js || true 
-//             echo Starting lint checks
-//             echo Lint Checks Completed for ${COMPONENT}
+    if (env.APPTYPE == 'nodejs') {
+      sh ''' 
+            # npm install 
+            # We want Devs to handle the lint checks failure 
+            # npm i jslint 
+            # node_modules/jslint/bin/jslint.js  server.js || true 
+            echo Starting lint checks
+            echo Lint Checks Completed for ${COMPONENT}
       
-//         ''' 
-//         } else if (env.APPTYPE == 'python'){
-//         sh ''' 
-//             echo Starting lint checks ${COMPONENT}
-//             # pylint *.py           # lint checks
-//             echo Lint Checks Completed for ${COMPONENT}
-//          ''' 
-//       } else if (env.APPTYPE == 'maven'){
-//         sh ''' 
-//             # mvn clean compile 
-//             echo Starting lint checks ${COMPONENT}
-//             # mvn checkstyle:check || true                        # lint checks
-//             echo Lint Checks Completed for ${COMPONENT}
-//          ''' 
-//       }
-//       else if (env.APPTYPE == 'go'){
-//         sh ''' 
+        ''' 
+        } else if (env.APPTYPE == 'python'){
+        sh ''' 
+            echo Starting lint checks ${COMPONENT}
+            # pylint *.py           # lint checks
+            echo Lint Checks Completed for ${COMPONENT}
+         ''' 
+      } else if (env.APPTYPE == 'maven'){
+        sh ''' 
+            # mvn clean compile 
+            echo Starting lint checks ${COMPONENT}
+            # mvn checkstyle:check || true                        # lint checks
+            echo Lint Checks Completed for ${COMPONENT}
+         ''' 
+      }
+      else if (env.APPTYPE == 'go'){
+        sh ''' 
             
-//             echo Starting lint checks ${COMPONENT}
-//             # golint main.go                        # lint checks
-//             echo Lint Checks Completed for ${COMPONENT}
-//          ''' 
-//       }
-//        else {
-//         sh ''' 
-//             echo Starting lint checks ${COMPONENT}
-//             echo Lint Checks Completed for ${COMPONENT}
-//          ''' 
-//       }
-//     }
-// }
+            echo Starting lint checks ${COMPONENT}
+            # golint main.go                        # lint checks
+            echo Lint Checks Completed for ${COMPONENT}
+         ''' 
+      }
+       else {
+        sh ''' 
+            echo Starting lint checks ${COMPONENT}
+            echo Lint Checks Completed for ${COMPONENT}
+         ''' 
+      }
+    }
+}
 
 def sonarCheck() {
     stage('Sonar Checks') {
@@ -73,7 +73,7 @@ def testCases() {
 def artifact() {
       stage('Check the release') {
            script {
-                env.UPLOAD_STATUS=sh(returnStdout: true, script: 'curl -L -s http://172.31.8.205:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true')
+                env.UPLOAD_STATUS=sh(returnStdout: true, script: 'curl -L -s http://172.31.0.74:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true')
                 print UPLOAD_STATUS       
              }
         }
@@ -124,7 +124,7 @@ def artifact() {
       stage('Upload Artifacts') {
          withCredentials([usernamePassword(credentialsId: 'NEXUS', usernameVariable: 'NEXUS_USR', passwordVariable: 'NEXUS_PSW')]) {
             sh ''' 
-             curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.8.205:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
+             curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.0.74:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
                   
              '''
               }
