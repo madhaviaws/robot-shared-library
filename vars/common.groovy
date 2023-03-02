@@ -32,6 +32,12 @@ def lintCheck() {
             # golint main.go                        # lint checks
             echo Lint Checks Completed for ${COMPONENT}
          ''' 
+      }else if (env.APPTYPE == 'angularjs'){
+        sh ''' 
+            echo Starting lint checks ${COMPONENT}
+            # pylint *.py           # lint checks
+            echo Lint Checks Completed for ${COMPONENT}
+         ''' 
       }
        else {
         sh ''' 
